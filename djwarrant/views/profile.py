@@ -80,8 +80,8 @@ class SignUpView(FormView):
     def create_store(name, address, adults, children):
         dynamodb = boto3.client('dynamodb', region_name='us-east-1')
         sns = boto3.client('sns')
-        store_id = str(uuid.uuid4()) #Unique identifier for spot
-        topicname = name + store_id
+        store_id = str(uuid.uuid4())  # Unique identifier for spot
+        topicname = store_id
 
         # create arn
         topic = sns.create_topic(Name=topicname)
@@ -116,24 +116,22 @@ class SignUpView(FormView):
             print(e)
 
         # add store
-         #DynamoDB: Add member
+         # DynamoDB: Add member
         dynamodb.put_item(
-                TableName='stores',
-                Item= {
-                    "id": {"S": f"{store_id}"}, 
-                    "name":{"S": f"{name}"},
-                    "address":{"S": f"{address}"},
-                    "sns_arn":{"S": f"{arn}"},
-                    "inventory":{
-                        "M" : {
+            TableName='stores',
+            Item={
+                "id": {"S": f"{store_id}"},
+                "name": {"S": f"{name}"},
+                "address": {"S": f"{address}"},
+                "sns_arn": {"S": f"{arn}"},
+                "inventory": {
+                    "M": {
                         "adult": {"N": f"{adults}"},
-                        "children":{"N": f"{children}"},
-                        }
+                        "children": {"N": f"{children}"},
                     }
                 }
-            )
-
-
+            }
+        )
 
     def form_valid(self, form):
         cognito = CognitoBackend()
@@ -141,7 +139,8 @@ class SignUpView(FormView):
         try:
             resp = cognito.register(name=form.user['name'], password=form.user['password'],
                                     email=form.user['email'], username=form.user['username'])
-            SignUpView.create_store(form.user['name'], form.user['address'], form.user['adult_masks'], form.user['children_masks'])
+            SignUpView.create_store(
+                form.user['name'], form.user['address'], form.user['adult_masks'], form.user['children_masks'])
 
         except Exception as e:
             if "User already exists" in str(e):
