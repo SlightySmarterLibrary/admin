@@ -118,7 +118,6 @@ class SignUpView(FormView):
             print(e)
 
         # add store
-
         dynamodb.put_item(
                 TableName='stores',
                 Item= {
@@ -128,6 +127,10 @@ class SignUpView(FormView):
                     "children":{"N": f"{children}"},
                     "address":{"S": f"{address}"},
                     "sns_arn":{"S": f"{arn}"}
+                    }
+                    )
+
+
 
 
     def form_valid(self, form):
