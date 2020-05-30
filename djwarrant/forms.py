@@ -1,6 +1,8 @@
 from django import forms
+from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class ProfileForm(forms.Form):
@@ -46,6 +48,11 @@ class SignUpForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
     verify_password = forms.CharField(
         widget=forms.PasswordInput(), required=True)
+
+    # Inventory Specific Input
+    address = forms.CharField(max_length=250)
+    adult_masks = forms.IntegerField(validators=[MinValueValidator(0)])
+    children_masks = forms.IntegerField(validators=[MinValueValidator(0)])
 
     def clean(self):
         user = super(SignUpForm, self).clean()
