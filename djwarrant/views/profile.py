@@ -17,6 +17,8 @@ from djwarrant.forms import ProfileForm
 from ..forms import SignUpForm, AccountVerificationForm
 from warrant import Cognito
 from djwarrant.backend import CognitoBackend
+import boto3
+import uuid
 
 
 class TokenMixin(AccessMixin):
@@ -75,12 +77,72 @@ class SignUpView(FormView):
     template_name = 'warrant/signup.html'
     form_class = SignUpForm
 
+    def create_store(name, address, adults, children):
+        dynamodb = boto3.client('dynamodb', region_name='us-east-1')
+        sns = boto3.client('sns')
+        store_id = str(uuid.uuid4()) #Unique identifier for spot
+        topicname = name + store_id
+
+        # create arn
+        topic = sns.create_topic(Name=topicname)
+        arn = topic['TopicArn']
+
+        # create table
+        try:
+            dynamodb.create_table(
+                AttributeDefinitions=[
+                    {
+                        'AttributeName': 'id',
+                        'AttributeType': 'S',
+                    },
+                ],
+                KeySchema=[
+                    {
+                        'AttributeName': 'id',
+                        'KeyType': 'HASH',
+                    },
+                ],
+                ProvisionedThroughput={
+                    'ReadCapacityUnits': 5,
+                    'WriteCapacityUnits': 5,
+                },
+                TableName='stores',
+            )
+            dynamodb.get_waiter('table_exists').wait(TableName='HW2')
+        except dynamodb.exceptions.ResourceInUseException:
+            pass
+        except Exception as e:
+            print("Error creating table.")
+            print(e)
+
+        # add store
+         #DynamoDB: Add member
+        dynamodb.put_item(
+                TableName='stores',
+                Item= {
+                    "id": {"S": f"{store_id}"}, 
+                    "name":{"S": f"{name}"},
+                    "address":{"S": f"{address}"},
+                    "sns_arn":{"S": f"{arn}"},
+                    "inventory":{
+                        "M" : {
+                        "adult": {"N": f"{adults}"},
+                        "children":{"N": f"{children}"},
+                        }
+                    }
+                }
+            )
+
+
+
     def form_valid(self, form):
         cognito = CognitoBackend()
 
         try:
             resp = cognito.register(name=form.user['name'], password=form.user['password'],
                                     email=form.user['email'], username=form.user['username'])
+            SignUpView.create_store(form.user['name'], form.user['address'], form.user['adult_masks'], form.user['children_masks'])
+
         except Exception as e:
             if "User already exists" in str(e):
                 form.errors['username'] = form.error_class(

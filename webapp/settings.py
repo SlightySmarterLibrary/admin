@@ -150,10 +150,10 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-***REMOVED*** = 'ASIAT6STUTTCKF62F4O3'
-***REMOVED*** = '2bQzkdeQycyBy04NnJFGaCu3E52hlKl7T07KQ8AT'
+***REMOVED*** = 'ASIA6NR5XESKDWYF654C'
+***REMOVED*** = 'M9x1rzW63u5JZKRWuakRWD4tAdHyp9rMqprwUhru'
 AWS_REGION = 'us-east-1'
-COGNITO_NAME = 'maskinventory'
+COGNITO_NAME = 'maskidentity'
 
 # ================================================================
 # This section automatically loads user cognito information for user pool
