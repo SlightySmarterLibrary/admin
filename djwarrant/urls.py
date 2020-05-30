@@ -1,6 +1,6 @@
 
 from django.contrib.auth import views as auth_views
-from django.urls import re_path
+from django.urls import re_path, path
 
 from .views import ProfileView, UpdateProfileView, MySubscriptions,\
     AdminListUsers, AdminSubscriptions, LogoutView, SignUpView
@@ -28,10 +28,10 @@ urlpatterns = (
             name='update-profile'),
     re_path(r'^profile/subscriptions/$',
             MySubscriptions.as_view(), name='subscriptions'),
-    re_path(r'^profile/account_verification',
-            views.AccountVerificationView.as_view()),
-    re_path(r'^profile/account_verification/<slug:username>', views.AccountVerificationView.as_view(),
-            name='account_verification'),
+    path('profile/account_verification',
+         views.AccountVerificationView.as_view()),
+    path('profile/account_verification/<slug:username>', views.AccountVerificationView.as_view(),
+         name='account_verification'),
     re_path(r'^admin/cognito-users/$', AdminListUsers.as_view(),
             name='admin-cognito-users'),
     re_path(r'^admin/cognito-users/(?P<username>[-\w]+)$',

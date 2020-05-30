@@ -4,7 +4,7 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url
 try:
-    from django.urls import reverse_lazy
+    from django.urls import reverse_lazy, reverse
 except ImportError:
     from django.core.urlresolvers import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -79,8 +79,8 @@ class SignUpView(FormView):
         cognito = CognitoBackend()
 
         try:
-            resp = cognito.register(name=form.user.name, password=form.user.password,
-                                    email=form.user.email, username=form.user.username)
+            resp = cognito.register(name=form.user['name'], password=form.user['password'],
+                                    email=form.user['email'], username=form.user['username'])
         except Exception as e:
             if "User already exists" in str(e):
                 form.errors['username'] = form.error_class(
@@ -95,12 +95,12 @@ class SignUpView(FormView):
             else:
                 raise(e)
 
-        return HttpResponseRedirect(reverse_lazy('account_verification',
-                                                 kwargs={'username': form.user['username']}))
+        return HttpResponseRedirect(reverse('dw:account_verification',
+                                            kwargs={'username': form.user['username']}))
 
 
 class AccountVerificationView(FormView):
-    template = 'warrant/verification.html'
+    template_name = 'warrant/account_verification.html'
     form_class = AccountVerificationForm
 
     def get_initial(self):
