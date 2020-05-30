@@ -1,7 +1,9 @@
 {% extends 'warrant/base.html' %}
 
 {% block main_content %}
-<th> {{ store_id }} </th>
+<h1> {{ store_name }} </h1>
+<button class="update-inventory btn btn-primary" type="button" name="button">Update Inventory</button>
+
     <table class="table">
         
         <tr>
@@ -12,4 +14,6 @@
         </tr>
     
     </table>
+
+
 {% endblock %}
