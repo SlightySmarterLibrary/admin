@@ -85,7 +85,6 @@ class SignUpView(FormView):
         topicname = ''.join(e for e in topicname if e.isalnum())
         topicname = topicname.replace(" ", "")
 
-
         # create arn
         topic = sns.create_topic(Name=topicname)
         arn = topic['TopicArn']
@@ -119,6 +118,7 @@ class SignUpView(FormView):
             print(e)
 
         # add store
+
         dynamodb.put_item(
                 TableName='stores',
                 Item= {
@@ -128,9 +128,6 @@ class SignUpView(FormView):
                     "children":{"N": f"{children}"},
                     "address":{"S": f"{address}"},
                     "sns_arn":{"S": f"{arn}"}
-                }
-            )
-
 
 
     def form_valid(self, form):
