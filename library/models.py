@@ -1,3 +1,14 @@
 from django.db import models
 
-# Create your models here.
+
+class Store(models.Model):
+    """
+      A store in our system that provides mask.
+    """
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=300)
+    inventory = {
+        "adult": models.IntegerField(),
+        "children": models.IntegerField(),
+    }
+    address = models.CharField(max_length=300)
