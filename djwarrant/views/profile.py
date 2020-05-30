@@ -77,11 +77,14 @@ class SignUpView(FormView):
     template_name = 'warrant/signup.html'
     form_class = SignUpForm
 
-    def create_store(name, address, adults, children):
+    def create_store(store_id, name, address, adults, children):
         dynamodb = boto3.client('dynamodb', region_name='us-east-1')
         sns = boto3.client('sns')
-        store_id = str(uuid.uuid4()) #Unique identifier for spot
-        topicname = name + store_id
+    
+        topicname = store_id + name
+        topicname = ''.join(e for e in topicname if e.isalnum())
+        topicname = topicname.replace(" ", "")
+
 
         # create arn
         topic = sns.create_topic(Name=topicname)
@@ -116,20 +119,15 @@ class SignUpView(FormView):
             print(e)
 
         # add store
-         #DynamoDB: Add member
         dynamodb.put_item(
                 TableName='stores',
                 Item= {
                     "id": {"S": f"{store_id}"}, 
                     "name":{"S": f"{name}"},
+                    "adult": {"N": f"{adults}"},
+                    "children":{"N": f"{children}"},
                     "address":{"S": f"{address}"},
-                    "sns_arn":{"S": f"{arn}"},
-                    "inventory":{
-                        "M" : {
-                        "adult": {"N": f"{adults}"},
-                        "children":{"N": f"{children}"},
-                        }
-                    }
+                    "sns_arn":{"S": f"{arn}"}
                 }
             )
 
@@ -137,11 +135,14 @@ class SignUpView(FormView):
 
     def form_valid(self, form):
         cognito = CognitoBackend()
+        
 
         try:
             resp = cognito.register(name=form.user['name'], password=form.user['password'],
                                     email=form.user['email'], username=form.user['username'])
-            SignUpView.create_store(form.user['name'], form.user['address'], form.user['adult_masks'], form.user['children_masks'])
+            # create store
+            # store_id = str(uuid.uuid4()) #Unique identifier for store
+            SignUpView.create_store(form.user['email'], form.user['name'], form.user['address'], form.user['adult_masks'], form.user['children_masks'])
 
         except Exception as e:
             if "User already exists" in str(e):

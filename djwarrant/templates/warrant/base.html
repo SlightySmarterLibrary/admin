@@ -47,6 +47,7 @@
             <li><a href="{% url 'dw:profile' %}">My Profile</a></li>
                             <li><a href="{% url 'dw:update-profile' %}">Update your Profile</a></li>
                             <li><a href="{% url 'dw:subscriptions' %}">My Subscriptions</a></li>
+                            <li><a href="{% url 'dw:storeinfo' %}">Store Info</a></li>
                             {% if request.user.is_authenticated %}
                                 <li><a href="{% url 'dw:logout' %}">Logout</a></li>
                             {% else %}

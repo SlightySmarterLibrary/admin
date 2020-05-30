@@ -150,8 +150,8 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-***REMOVED*** = 'ASIA6NR5XESKDWYF654C'
-***REMOVED*** = 'M9x1rzW63u5JZKRWuakRWD4tAdHyp9rMqprwUhru'
+***REMOVED*** = 'ASIA6NR5XESKPMF6XYNK'
+***REMOVED*** = '1BQx3+3+8xspHRrGj3AXGcDpxKvCgVcq7GS9fLFw'
 AWS_REGION = 'us-east-1'
 COGNITO_NAME = 'maskidentity'
 

@@ -28,6 +28,8 @@ urlpatterns = (
             name='update-profile'),
     re_path(r'^profile/subscriptions/$',
             MySubscriptions.as_view(), name='subscriptions'),
+    re_path(r'^profile/storeinfo/$',
+            views.storeinfo, name='storeinfo'),
     path('profile/account_verification',
          views.AccountVerificationView.as_view()),
     path('profile/account_verification/<slug:username>', views.AccountVerificationView.as_view(),
