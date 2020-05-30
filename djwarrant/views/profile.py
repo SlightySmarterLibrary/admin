@@ -79,7 +79,8 @@ class SignUpView(FormView):
         cognito = CognitoBackend()
 
         try:
-            resp = cognito.register(**form.user)
+            resp = cognito.register(name=form.name, password=form.password,
+                                    email=form.email, username=form.username)
         except Exception as e:
             if "User already exists" in str(e):
                 form.errors['username'] = form.error_class(
