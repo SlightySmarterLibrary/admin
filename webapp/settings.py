@@ -42,6 +42,7 @@ COGNITO_ATTR_MAPPING = env(
         'email': 'email',
         'given_name': 'first_name',
         'family_name': 'last_name',
+        'name': 'name',
         'custom:api_key': 'api_key',
         'custom:api_key_id': 'api_key_id'
     },
@@ -152,7 +153,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 ***REMOVED*** = 'ASIAT6STUTTCKF62F4O3'
 ***REMOVED*** = '2bQzkdeQycyBy04NnJFGaCu3E52hlKl7T07KQ8AT'
 AWS_REGION = 'us-east-1'
-COGNITO_NAME = 'smartlibrary'
+COGNITO_NAME = 'maskinventory'
 
 # ================================================================
 # This section automatically loads user cognito information for user pool
@@ -163,7 +164,7 @@ cognito = boto3.client('cognito-idp', region_name=AWS_REGION)
 
 # Load the UserPool ID for the smart library.
 for user_pool in cognito.list_user_pools(MaxResults=5)['UserPools']:
-    if user_pool['Name'] == 'smart-library':
+    if user_pool['Name'] == COGNITO_NAME:
         user_pool_id = user_pool['Id']
         break
 

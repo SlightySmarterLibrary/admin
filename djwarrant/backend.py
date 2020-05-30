@@ -114,14 +114,12 @@ class CognitoBackend(AbstractCognitoBackend):
     def register(self, username,
                  password,
                  email,
-                 first_name,
-                 last_name):
+                 name):
         '''Register user with cognito
         :param username: Cognito Username
         :param password: Cognito Password
         :param email: Email
-        :param first_name: First name
-        :param last_name: Last name
+        :param name: Name
         :returns: Response from Cognito
         '''
 
@@ -134,8 +132,7 @@ class CognitoBackend(AbstractCognitoBackend):
             username=username)
 
         try:
-            cognito_user.add_base_attributes(**{'given_name': first_name,
-                                                'family_name': last_name,
+            cognito_user.add_base_attributes(**{'name': name,
                                                 'email': email})
             response = cognito_user.register(username, password)
         except (Boto3Error, ClientError) as e:

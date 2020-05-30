@@ -23,7 +23,7 @@ class GetCognitoUserMixin(object):
         cog_client = boto3.client('cognito-idp')
         user = cog_client.get_user(
             AccessToken=self.request.session['ACCESS_TOKEN'])
-        u = UserObj(username=user.get('Username'),#.get('UserAttributes')[0].get('username'),
+        u = UserObj(username=user.get('Username'),  # .get('UserAttributes')[0].get('username'),
                     attribute_list=user.get('UserAttributes'),
                     cognito_obj=cog_client,
                     attr_map=settings.COGNITO_ATTR_MAPPING)
@@ -35,26 +35,26 @@ class GetCognitoUserMixin(object):
         except KeyError:
             raise Http404
         my_plans = self.client.get_usage_plans(keyId=u.api_key_id)
-        return my_plans.get('items',[])
+        return my_plans.get('items', [])
 
 
-class MySubsriptions(LoginRequiredMixin,GetCognitoUserMixin,ListView):
+class MySubscriptions(LoginRequiredMixin, GetCognitoUserMixin, ListView):
     template_name = 'warrant/subscriptions.html'
 
 
-class AdminListUsers(UserPassesTestMixin,ListView):
+class AdminListUsers(UserPassesTestMixin, ListView):
     template_name = 'warrant/admin-list-users.html'
 
     def test_func(self):
         return self.request.user.is_staff
 
     def get_queryset(self):
-        response = Cognito(settings.COGNITO_USER_POOL_ID,settings.COGNITO_APP_ID)\
+        response = Cognito(settings.COGNITO_USER_POOL_ID, settings.COGNITO_APP_ID)\
             .get_users(attr_map=settings.COGNITO_ATTR_MAPPING)
         return response
 
 
-class AdminSubscriptions(UserPassesTestMixin,GetCognitoUserMixin,
+class AdminSubscriptions(UserPassesTestMixin, GetCognitoUserMixin,
                          FormView):
     template_name = 'warrant/admin-subscriptions.html'
     form_class = APIKeySubscriptionForm
@@ -67,8 +67,8 @@ class AdminSubscriptions(UserPassesTestMixin,GetCognitoUserMixin,
         return self.request.user.has_perm('can_edit')
 
     def get_user_object(self):
-        return Cognito(settings.COGNITO_USER_POOL_ID,settings.COGNITO_APP_ID,
-                      username=self.kwargs.get('username')).admin_get_user(
+        return Cognito(settings.COGNITO_USER_POOL_ID, settings.COGNITO_APP_ID,
+                       username=self.kwargs.get('username')).admin_get_user(
             attr_map=settings.COGNITO_ATTR_MAPPING)
 
     def get_context_data(self, **kwargs):
@@ -78,8 +78,8 @@ class AdminSubscriptions(UserPassesTestMixin,GetCognitoUserMixin,
 
     def get_form_kwargs(self):
         kwargs = super(AdminSubscriptions, self).get_form_kwargs()
-        kwargs.update({'plans':self.client.get_usage_plans().get('items',[]),
-                'users_plans':[p.get('id') for p in self.get_queryset()]})
+        kwargs.update({'plans': self.client.get_usage_plans().get('items', []),
+                       'users_plans': [p.get('id') for p in self.get_queryset()]})
         return kwargs
 
     def form_invalid(self, form):
@@ -92,5 +92,5 @@ class AdminSubscriptions(UserPassesTestMixin,GetCognitoUserMixin,
             keyId=self.get_user_object().api_key_id,
             keyType='API_KEY'
         )
-        messages.success(self.request,'Addedd subscription successfully.')
+        messages.success(self.request, 'Addedd subscription successfully.')
         return super(AdminSubscriptions, self).form_valid(form)
