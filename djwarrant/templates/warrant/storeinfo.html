@@ -1,11 +1,14 @@
 {% extends 'warrant/base.html' %}
 
 {% block main_content %}
-
+<th> {{ store_id }} </th>
     <table class="table">
+        
         <tr>
-            {{ store_id }}
-            {{ resp }}
+           <td> Adult </td> <td> {{ adult }} </td>
+            <td> Children </td> <td> {{ children }} </td>
+           <td> Total </td> <td> {{ adult|add:children }} </td>
+
         </tr>
     
     </table>

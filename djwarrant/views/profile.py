@@ -127,8 +127,7 @@ class SignUpView(FormView):
                     "children":{"N": f"{children}"},
                     "address":{"S": f"{address}"},
                     "sns_arn":{"S": f"{arn}"}
-                    }
-                    )
+                    })
 
 
 
