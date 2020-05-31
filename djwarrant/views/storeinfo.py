@@ -3,6 +3,7 @@ from djwarrant.forms import StoreForm
 from bootstrap_modal_forms.generic import BSModalCreateView
 from bootstrap_modal_forms.forms import BSModalForm
 from dynamodb_json import json_util as json
+import json as og_json
 from django.conf import settings
 from django.shortcuts import render
 import boto3
@@ -19,25 +20,47 @@ def storeinfo(request):
     adult = resp['Items'][0]['adult']
     children = resp['Items'][0]['children']
 
-    orders = ViewOrders().process(store_id=store_id, received=False)
+    order_status = request.GET.get('status', 'all')
+    orders = ViewOrders().process(store_id=store_id, status=order_status)
 
-    return render(request, 'warrant/storeinfo.html', {'store_name': store_name, 'adult': adult, 'children': children, 'orders': orders})
+    return render(request,
+                  'warrant/storeinfo.html',
+                  {
+                      'store_name': store_name,
+                      'adult': adult,
+                      'children': children,
+                      'orders': orders,
+                      'filter_status': order_status.capitalize()
+                  })
 
 
 class ViewOrders():
     """Loads Orders from DynamoDB"""
 
-    def process(self, store_id=None, received=False):
+    def process(self, store_id=None, status='all'):
+        index = 'store_id-index'
+        queryCondition = 'store_id = :store_id'
+        queryAttributes = {
+            ':store_id': store_id
+        }
+
         dynamoDB = boto3.client('dynamodb', region_name=settings.AWS_REGION)
         response = dynamoDB.query(
             TableName='orders',
-            IndexName='store_id-index',
-            KeyConditionExpression="store_id = :store_id",
-            ExpressionAttributeValues={
-                ':store_id': {'S': store_id},
-            })
+            IndexName=index,
+            KeyConditionExpression=queryCondition,
+            ExpressionAttributeValues=og_json.loads(json.dumps(queryAttributes)))
 
-        return json.loads(response['Items'])
+        return filter_results(data=json.loads(response['Items']), status=status)
+
+
+def filter_results(data, status='all'):
+    if status == 'all':
+        return data
+    elif status == 'pending':
+        return list(filter(lambda x: x['received'] == False, data))
+    elif status == 'completed':
+        return list(filter(lambda x: x['received'] == True, data))
 
 
 class InventoryView(BSModalCreateView):
