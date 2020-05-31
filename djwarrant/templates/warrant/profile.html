@@ -1,12 +1,21 @@
 {% extends 'warrant/base.html' %}
 {% load cognito_tags %}
+{% load static %}
+
 
 {% block title %}Your Profile{% endblock title %}
 
 {% block main_content %}
+<div class = "row">
+  <div class = "col-md-2"> </div>
+  <div class = "col-md-8">
+  <div class = "row"> <img src="{% static 'img/profile.jpg' %}" style="max-width: 100%" /> </div>
+
+  <div class = "row" style = "box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important">
+
   <div class="user-session__content-wrapper">
     <div style="display: flex; align-items: baseline; justify-content: space-between;">
-      <h1 class="user-session__heading">{{ user|username }}</h1>
+      <h1 class="user-session__heading"> <strong> {{ user|username }} </strong> </h1>
       <a href="{% url 'dw:update-profile' %}">Edit</a>
     </div>
 
@@ -52,4 +61,10 @@
       </div>
     </div>
   </div>
+
+</div>
+
+</div>
+<div class = "col-md-2"> </div>
+</div>
 {% endblock main_content %}

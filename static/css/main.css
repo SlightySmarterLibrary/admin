@@ -24,15 +24,17 @@
   margin: 0 0 1em;
 }
 
+
 .user-session__form {
   display: flex;
   margin: 1em auto;
   flex-direction: column;
   min-width: 480px;
   width: 480px;
-  background: white;
+  background: #fbfbfb;
   border-radius: 10px;
   padding: 2em;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
 }
 
 .user-session__form--title {
@@ -170,7 +172,7 @@
   text-align: center;
 }
 
-.header__item a:hover {
+.header__item a:hover, a:hover {
   color: #2ec4b6 !important;
   text-decoration: none;
 }
