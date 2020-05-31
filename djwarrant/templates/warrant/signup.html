@@ -1,9 +1,12 @@
 {% extends 'warrant/base.html' %}
 {% load widget_tweaks %}
+{% load static %}
 
 {% block title %}Sign Up{% endblock title %}
 
 {% block main_content %}
+
+<div class = "col-md-6">
   <form method="post" class="user-session__form">
     <h1 class="user-session__heading user-session__form--title">Sign up</h1>
 
@@ -27,4 +30,11 @@
     {% endfor %}
     <button class="user-session__button" type="submit">Sign up</button>
   </form>
+</div>
+
+<div class = "col-md-6" style = "padding-top: 20px">
+  <img src="{% static 'img/02.svg' %}" style="max-width: 90%" />
+  <img src="{% static 'img/06.svg' %}" style="max-width: 90%" />
+
+</div>
 {% endblock %}
