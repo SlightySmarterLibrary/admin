@@ -11,7 +11,8 @@ app_name = 'dw'
 
 urlpatterns = (
     re_path(r'^login/$', auth_views.LoginView.as_view(
-        template_name='warrant/login.html'), name='login'),
+        template_name='warrant/login.html',
+        redirect_authenticated_user=True), name='login'),
     re_path(r'^logout/$',
             LogoutView.as_view(template_name='warrant/logout.html'), name='logout'),
     re_path(r'^signup/$', SignUpView.as_view(), name='signup'),

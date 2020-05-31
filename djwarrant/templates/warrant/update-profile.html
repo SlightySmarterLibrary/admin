@@ -1,10 +1,29 @@
-{% extends 'warrant/base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+{% load widget_tweaks %}
+
 {% block main_content %}
-    <form action="." method="post" class="form">
+  <form method="post" class="user-session__form">
+    <h1 class="user-session__heading user-session__form--title">Update Profile</h1>
+
     {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" class="btn btn-primary">
-    </form>
+    {% for field in form %}
+      <div class="user-session__input-group">
+        <label class="user-session__input-group--label" for="{{ field.id_for_label }}">{{ field.name }}</label>
+
+        {{ field|add_class:'user-session__input-group--input' }}
+
+
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+
+        {% for error in field.errors %}
+          <div class="user-session__input-group--error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button class="user-session__button" type="submit">Login</button>
+  </form>
 {% endblock %}
