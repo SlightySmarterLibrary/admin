@@ -17,7 +17,7 @@ from djwarrant.forms import APIKeySubscriptionForm
 
 
 class GetCognitoUserMixin(object):
-    client = boto3.client('apigateway')
+    client = boto3.client('apigateway', region_name="us-east-1")
 
     def get_user_object(self):
         cog_client = boto3.client('cognito-idp')
