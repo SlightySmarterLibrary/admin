@@ -19,6 +19,7 @@ from warrant import Cognito
 from djwarrant.backend import CognitoBackend
 import boto3
 import uuid
+import json
 
 
 class TokenMixin(AccessMixin):
@@ -80,7 +81,10 @@ class SignUpView(FormView):
     def create_store(store_id, name, address, adults, children):
         dynamodb = boto3.client('dynamodb', region_name='us-east-1')
         sns = boto3.client('sns')
-    
+        sqs = boto3.client('sqs', region_name='us-east-1')
+        qname = "https://sqs.us-east-1.amazonaws.com/583068504140/homework2"
+
+
         topicname = store_id + name
         topicname = ''.join(e for e in topicname if e.isalnum())
         topicname = topicname.replace(" ", "")
@@ -88,6 +92,40 @@ class SignUpView(FormView):
         # create arn
         topic = sns.create_topic(Name=topicname)
         arn = topic['TopicArn']
+
+        sns_topic_policy = {
+            
+              "Version": "2008-10-17",
+              "Id": "__default_policy_ID",
+              "Statement": [
+                {
+                  "Sid": "__default_statement_ID",
+                  "Effect": "Allow",
+                  "Principal": {
+                    "AWS": "*"
+                  },
+                  "Action": [
+                    "SNS:GetTopicAttributes",
+                    "SNS:SetTopicAttributes",
+                    "SNS:AddPermission",
+                    "SNS:RemovePermission",
+                    "SNS:DeleteTopic",
+                    "SNS:Subscribe",
+                    "SNS:ListSubscriptionsByTopic",
+                    "SNS:Publish",
+                    "SNS:Receive"
+                  ],
+                  "Resource": arn
+                }
+              ]
+            }    
+        
+
+        sns.set_topic_attributes(
+            TopicArn=arn,
+            AttributeName='Policy',
+            AttributeValue=json.dumps(sns_topic_policy)
+        )
 
         # create table
         try:
@@ -128,6 +166,14 @@ class SignUpView(FormView):
                     "address":{"S": f"{address}"},
                     "sns_arn":{"S": f"{arn}"}
                     })
+
+        # subscribe to sqs
+        x = '''{{"function":"subscribe", "email": "{0}", "topic": "{1}"}}'''.format(store_id, arn)
+        sqs.send_message(QueueUrl=qname, MessageBody=x)    
+
+        print("sqs sent!")
+
+       
 
 
 
