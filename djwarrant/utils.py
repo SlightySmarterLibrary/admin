@@ -23,7 +23,6 @@ def user_obj_to_django(user_obj):
 
 
 def get_cognito(request):
-
     c = Cognito(settings.COGNITO_USER_POOL_ID, settings.COGNITO_APP_ID,
                 access_token=request.session.get('ACCESS_TOKEN'),
                 id_token=request.session.get('ID_TOKEN'),

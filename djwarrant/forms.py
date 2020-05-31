@@ -12,16 +12,11 @@ class StoreForm(BSModalForm):
         fields = ['adult_masks', 'children_masks']
 
 class ProfileForm(forms.Form):
-    first_name = forms.CharField(max_length=200, required=True)
-    last_name = forms.CharField(max_length=200, required=False)
+    name = forms.CharField(max_length=200, required=True)
     email = forms.EmailField(required=True)
-    phone_number = forms.CharField(max_length=30, required=False)
-    gender = forms.ChoiceField(
-        choices=(('female', 'Female'), ('male', 'Male')), required=False)
     address = forms.CharField(max_length=200, required=False)
-    preferred_username = forms.CharField(max_length=200, required=False)
-    api_key = forms.CharField(max_length=200, required=False)
-    api_key_id = forms.CharField(max_length=200, required=False)
+    # api_key = forms.CharField(max_length=200, required=False)
+    # api_key_id = forms.CharField(max_length=200, required=False)
 
 
 class APIKeySubscriptionForm(forms.Form):

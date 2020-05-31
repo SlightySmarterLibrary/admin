@@ -39,9 +39,8 @@ DYNAMODB_BOOKS = 'SSL-Books'
 COGNITO_ATTR_MAPPING = env(
     'COGNITO_ATTR_MAPPING',
     {
+        'username': 'username',
         'email': 'email',
-        'given_name': 'first_name',
-        'family_name': 'last_name',
         'name': 'name',
         'custom:api_key': 'api_key',
         'custom:api_key_id': 'api_key_id'
@@ -62,6 +61,7 @@ INSTALLED_APPS = [
     'djwarrant',
     'crispy_forms',
     'django_extensions',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -143,12 +143,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-STATIC_URL = '/static/'
-
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 ***REMOVED*** = 'ASIA6NR5XESKPF22I6Q5'
@@ -188,3 +182,20 @@ COGNITO_USER_POOL_ID = user_pool_id
 COGNITO_APP_ID = user_client_id
 
 # ================================================================
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.1/howto/static-files/
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

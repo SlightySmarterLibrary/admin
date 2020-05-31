@@ -18,8 +18,10 @@ class CognitoUser(Cognito):
     COGNITO_ATTR_MAPPING = getattr(settings, 'COGNITO_ATTR_MAPPING',
                                    {
                                        'email': 'email',
+                                       'username': 'username',
                                        'given_name': 'first_name',
                                        'family_name': 'last_name',
+                                       'address': 'address',
                                    }
                                    )
 

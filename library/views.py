@@ -6,8 +6,7 @@ import boto3
 
 
 def index(request):
-    # return render(request, 'index.html', {'id': id})
-    return HttpResponse('Home page')
+    return render(request, 'index.html')
 
 
 def browse(request):
