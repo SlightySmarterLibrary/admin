@@ -1,6 +1,8 @@
-{% extends 'warrant/base.html' %}
 
+{% extends 'warrant/base.html' %}
+{% load static %}
 {% block main_content %}
+
 <h1> {{ store_name }} </h1>
 <button class="update-inventory btn btn-primary" type="button" name="button">Update Inventory</button>
 
@@ -16,4 +18,30 @@
     </table>
 
 
-{% endblock %}
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
+
+{% endblock main_content %}
+
+
+{% block extrascripts %}
+	
+   <script type="text/javascript">
+	$(document).ready(function() {
+
+    $(".update-inventory").modalForm({
+        formURL: "{% url 'dw:update-inventory' %}"
+    });
+
+});
+</script>
+
+{% endblock extrascripts %}
+
+
+

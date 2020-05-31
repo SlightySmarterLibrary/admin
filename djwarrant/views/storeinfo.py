@@ -1,6 +1,14 @@
 from django.shortcuts import render
 import boto3
 from boto3.dynamodb.conditions import Key
+from bootstrap_modal_forms.forms import BSModalForm
+from bootstrap_modal_forms.generic import BSModalCreateView
+from djwarrant.forms import StoreForm
+from django.urls import reverse_lazy
+
+
+
+
 
 
 
@@ -16,6 +24,13 @@ def storeinfo(request):
 
 
     return render(request, 'warrant/storeinfo.html', {'store_name': store_name, 'adult': adult, 'children': children})
+
+
+class InventoryView(BSModalCreateView):
+    template_name = 'warrant/update-inventory.html'
+    form_class = StoreForm
+    success_message = 'Success: Store updated.'
+    success_url = reverse_lazy('index')
 
 
 

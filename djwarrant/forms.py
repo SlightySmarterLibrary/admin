@@ -3,7 +3,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import MaxValueValidator, MinValueValidator
+from bootstrap_modal_forms.forms import BSModalForm
+from .models import Store
 
+class StoreForm(BSModalForm):
+    class Meta:
+        model = Store
+        fields = ['adult_masks', 'children_masks']
 
 class ProfileForm(forms.Form):
     first_name = forms.CharField(max_length=200, required=True)

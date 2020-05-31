@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import re_path, path
 
 from .views import ProfileView, UpdateProfileView, MySubscriptions,\
-    AdminListUsers, AdminSubscriptions, LogoutView, SignUpView
+    AdminListUsers, AdminSubscriptions, LogoutView, SignUpView, InventoryView
 
 from . import views
 
@@ -28,8 +28,8 @@ urlpatterns = (
             name='update-profile'),
     re_path(r'^profile/subscriptions/$',
             MySubscriptions.as_view(), name='subscriptions'),
-    re_path(r'^profile/storeinfo/$',
-            views.storeinfo, name='storeinfo'),
+    re_path(r'^profile/storeinfo/$', views.storeinfo, name='storeinfo'),
+    re_path(r'^profile/storeinfo/update-inventory', InventoryView.as_view(), name='update-inventory'),
     path('profile/account_verification',
          views.AccountVerificationView.as_view()),
     path('profile/account_verification/<slug:username>', views.AccountVerificationView.as_view(),

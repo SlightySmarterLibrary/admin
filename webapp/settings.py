@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap_modal_forms',
     'library',
     'djwarrant',
     'crispy_forms',
@@ -150,8 +151,8 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-***REMOVED*** = 'ASIA6NR5XESKPMF6XYNK'
-***REMOVED*** = '1BQx3+3+8xspHRrGj3AXGcDpxKvCgVcq7GS9fLFw'
+***REMOVED*** = 'ASIA6NR5XESKPF22I6Q5'
+***REMOVED*** = 'HWHCqCqjmPG8N/X6KMb6cgJ9wly4Q+k+a1oz62IA'
 AWS_REGION = 'us-east-1'
 COGNITO_NAME = 'maskidentity'
 
