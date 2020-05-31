@@ -128,6 +128,13 @@
   color: #172b4d !important;
 }
 
+.header .header__title a:hover {
+  font-weight: 600px;
+  font-size: 1.5em;
+  color: #2ec4b6 !important;
+  text-decoration: none;
+}
+
 .header__items {
   display: flex;
   margin-left: auto;
@@ -162,8 +169,8 @@
 }
 
 .header__item a:hover {
-  color: rgb(230, 210, 0) !important;
-  text-decoration: underline;
+  color: #2ec4b6 !important;
+  text-decoration: none;
 }
 
 .header__item--black a {
@@ -246,3 +253,12 @@
 }
 
 /* End of Navigation Styles */
+
+/* Changing Fonts */
+html {
+  font-family: 'Oxygen', sans-serif;
+}
+
+body {
+  font-family: 'Oxygen', sans-serif;
+}
