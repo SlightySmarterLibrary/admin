@@ -48,15 +48,6 @@ class ViewOrders():
 
         return json.loads(response['Items'])
 
-
-def update(request):
-    if request.method == 'POST':
-        form = StoreForm(request.POST)
-        name = form.data['adult']
-        print(name)
-
-    return HttpResponse('Form submitted!')
-
 class InventoryView(BSModalCreateView):
     template_name = 'warrant/update-inventory.html'
     form_class = StoreForm
