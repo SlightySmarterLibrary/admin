@@ -5,15 +5,13 @@
 <button class="update-inventory btn btn-primary" type="button" name="button">Update Inventory</button>
 
     <table class="table">
-        
         <tr>
            <td> Adult </td> <td> {{ adult }} </td>
             <td> Children </td> <td> {{ children }} </td>
            <td> Total </td> <td> {{ adult|add:children }} </td>
 
         </tr>
-    
     </table>
 
-
+    {% include 'orders/index.html' %}
 {% endblock %}

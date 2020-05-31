@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_extensions',
     'widget_tweaks',
+    'dynamodb-json',
 ]
 
 MIDDLEWARE = [
@@ -144,8 +145,8 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-***REMOVED*** = 'ASIA6NR5XESKPMF6XYNK'
-***REMOVED*** = '1BQx3+3+8xspHRrGj3AXGcDpxKvCgVcq7GS9fLFw'
+***REMOVED*** = 'ASIAT6STUTTCKSGUAV4J'
+***REMOVED*** = 'JE8PayIqbSEtWkwo4Al5DWr4SHkki0Qn1oudxHRH'
 AWS_REGION = 'us-east-1'
 COGNITO_NAME = 'maskidentity'
 
