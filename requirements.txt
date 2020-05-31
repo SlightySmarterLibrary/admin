@@ -8,6 +8,7 @@ django-crispy-forms==1.9.1
 django-extensions==2.2.9
 django-widget-tweaks==1.4.8
 django-service-objects==0.7.0
+django-bootstrap-modal-forms==1.5.0
 docutils==0.15.2
 ecdsa==0.15
 envs==1.3
