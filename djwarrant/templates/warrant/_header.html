@@ -1,35 +1,36 @@
 <nav class="header">
-  <div class="header__title flex-left">
-    Mask Inventory
+  <div class="header__title">
+    <a href="{% url 'index' %}">Mask Inventory</a>
   </div>
 
-  <ul class="header-items flex-right">
+  <ul class="header__items">
     {% if request.user.is_authenticated %}
-      <li class="header__item">
-        <a href="{% url 'dw:profile' %}">My Profile</a>
-      </li>
+    <li class="header__item">
+      <a href="{% url 'dw:profile' %}">My Profile</a>
+    </li>
 
-      <li class="header__item">
-        <a href="{% url 'dw:subscriptions' %}">My Subscriptions</a>
-      </li>
+    <li class="header__item">
+      <a href="{% url 'dw:subscriptions' %}">My Subscriptions</a>
+    </li>
 
-      <li class="header__item">
-          <a href="{% url 'dw:storeinfo' %}">Store</a>
-        </li>
+    <li class="header__item">
+      <a href="{% url 'dw:storeinfo' %}">Store</a>
+    </li>
 
-      <li class="header__item">
-        <a href="{% url 'dw:logout' %}">Logout</a>
-      </li>
+    <li class="header__item">
+      <a href="{% url 'dw:logout' %}">Logout</a>
+    </li>
     {% else %}
-      <li class="header__item"><a href="{% url 'dw:login' %}">Login</a></li>
+    <li class="header__item"><a href="{% url 'dw:login' %}">Login</a></li>
+    <li class="header__item"><a href="{% url 'dw:signup' %}">Sign Up</a></li>
     {% endif %}
   </ul>
 
   <div class="flex-right burger-header--wrapper">
     <div id="mainHeader" class="burger-header">
-      <div class="bar-1"></div>
-      <div class="bar-2"></div>
-      <div class="bar-3"></div>
+      <div class="bar__base bar-1"></div>
+      <div class="bar__base bar-2"></div>
+      <div class="bar__base bar-3"></div>
     </div>
   </div>
 </nav>
@@ -53,5 +54,6 @@
     </li>
   {% else %}
     <li><a href="{% url 'dw:login' %}" class="collapsed-header-link">Login</a></li>
+    <li><a href="{% url 'dw:signup' %}" class="collapsed-header-link">Sign Up</a></li>
   {% endif %}
 </div>

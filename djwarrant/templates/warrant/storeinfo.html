@@ -1,4 +1,3 @@
-
 {% extends 'warrant/base.html' %}
 {% load static %}
 {% block main_content %}
@@ -7,16 +6,15 @@
 <button class="update-inventory btn btn-primary" type="button" name="button">Update Inventory</button>
 
     <table class="table">
-        
         <tr>
            <td> Adult </td> <td> {{ adult }} </td>
             <td> Children </td> <td> {{ children }} </td>
            <td> Total </td> <td> {{ adult|add:children }} </td>
 
         </tr>
-    
     </table>
 
+    {% include 'orders/index.html' %}
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
   <div class="modal-dialog" role="document">
@@ -30,7 +28,6 @@
 
 
 {% block extrascripts %}
-	
    <script type="text/javascript">
 	$(document).ready(function() {
 

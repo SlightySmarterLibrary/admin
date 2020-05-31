@@ -14,10 +14,10 @@
   <meta name="author" content="">
   <link rel="icon" href="../../favicon.ico">
 
-  <title>{% block title %}Cognito Profile{% endblock %}</title>
+  <title>{% block title %}{% endblock %} | Mask Inventory</title>
 
   {% block css %}
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   {% endblock %}
 
@@ -32,71 +32,7 @@
 </head>
 
 <body class="main">
-  <nav class="header">
-    <div class="header__logo">
-      Mask Inventory
-    </div>
-
-    <ul class="header__items">
-      {% if request.user.is_authenticated %}
-        <li class="header__item">
-          <a href="{% url 'dw:profile' %}">My Profile</a>
-        </li>
-
-        <li class="header__item">
-          <a href="{% url 'dw:update-profile' %}">Update your Profile</a>
-        </li>
-
-        <li class="header__item">
-          <a href="{% url 'dw:subscriptions' %}">My Subscriptions</a>
-        </li>
-
-        <li class="header__item">
-          <a href="{% url 'dw:storeinfo' %}">Store</a>
-        </li>
-
-        <li class="header__item">
-          <a href="{% url 'dw:logout' %}">Logout</a>
-        </li>
-      {% else %}
-        <li class="header__item"><a href="{% url 'dw:login' %}">Login</a></li>
-      {% endif %}
-    </ul>
-
-    <div class="flex-right burger-header--wrapper">
-      <div id="mainHeader" class="burger-header">
-        <div class="bar__base bar-1"></div>
-        <div class="bar__base bar-2"></div>
-        <div class="bar__base bar-3"></div>
-      </div>
-    </div>
-  </nav>
-
-  <div id="main-header-links" class="collapsed-nav">
-    {% if request.user.is_authenticated %}
-      <li class="header__item">
-        <a href="{% url 'dw:profile' %}" class="collapsed-header-link">My Profile</a>
-      </li>
-
-      <li class="header__item">
-        <a href="{% url 'dw:update-profile' %}" class="collapsed-header-link">Update your Profile</a>
-      </li>
-
-      <li>
-        <a href="{% url 'dw:subscriptions' %}" class="collapsed-header-link">My Subscriptions</a>
-      </li>
-
-      <li>
-        <a href="{% url 'dw:storeinfo' %}" class="collapsed-header-link">Store</a>
-      </li>
-
-      <li>
-        <a href="{% url 'dw:logout' %}" class="collapsed-header-link">Logout</a>
-      </li>
-    {% else %}
-      <li><a href="{% url 'dw:login' %}" class="collapsed-header-link">Login</a></li>
-    {% endif %}
-  </div>
+  {% include 'warrant/_header.html' with blog_entry=my_blog_entry %}
 
   {% block body %}
     {% block content %}
@@ -120,9 +56,6 @@
     {% block js %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
-
-
     {% endblock %}
 
     {% block scripts %}
@@ -132,6 +65,5 @@
     {% endblock scripts %}
 
     {% block extrascripts %}{% endblock extrascripts %}
-
   </body>
 </html>

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_extensions',
     'widget_tweaks',
+    'dynamodb-json',
 ]
 
 MIDDLEWARE = [
