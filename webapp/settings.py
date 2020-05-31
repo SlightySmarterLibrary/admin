@@ -146,8 +146,8 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-***REMOVED*** = 'ASIAT6STUTTCII6NMHFD'
-***REMOVED*** = 'B6PqZ3yS7rHbE+kMEeZEK0j07O8x9EFVj3x9IQD1'
+***REMOVED*** = '***REMOVED***'
+***REMOVED*** = '***REMOVED***'
 AWS_REGION = 'us-east-1'
 COGNITO_NAME = 'maskidentity'
 
