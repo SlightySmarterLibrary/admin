@@ -432,3 +432,25 @@ tbody tr:nth-child(odd) {
 }
 
 /* End of Store Styles */
+
+.box-shadow {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+}
+
+/* Modal Styles */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h5 {
+  margin-right: auto;
+  margin: 0;
+}
+
+.modal-header button {
+  margin-left: auto;
+}
+
+/* End of Modal Styles */

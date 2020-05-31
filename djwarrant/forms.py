@@ -6,11 +6,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from bootstrap_modal_forms.forms import BSModalForm
 from .models import Store
 
+
 class StoreForm(BSModalForm):
     class Meta:
         model = Store
         fields = ['adult_masks', 'children_masks']
-        
 
 
 class ProfileForm(forms.Form):
