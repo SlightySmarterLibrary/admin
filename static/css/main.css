@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   font-size: 16px;
-  background: #F5F5F5;
+  background: #fbfbfb; /*#F5F5F5; */
   color: #172b4d;
 }
 
@@ -78,12 +78,14 @@
   background: transparent;
   border: none;
   border-radius: 5px;
-  background: rgb(255, 240, 75);
+  background: #172b4d;
+  color: white;
+
 }
 
 .user-session__button:hover {
-  background: #172b4d;
-  color: #E0E8F6;
+  background: #2ec4b6;
+  color: black;
 }
 
 .user-session__link--button {
