@@ -10,6 +10,8 @@ class StoreForm(BSModalForm):
     class Meta:
         model = Store
         fields = ['adult_masks', 'children_masks']
+        
+
 
 class ProfileForm(forms.Form):
     name = forms.CharField(max_length=200, required=True)
