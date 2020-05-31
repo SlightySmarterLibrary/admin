@@ -1,10 +1,21 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+	<link href="{% static 'css/home.css' %}" rel="stylesheet"/>
+{% endblock extra_css %}
 
 {% block title %}
   Home
 {% endblock %}
 
 {% block main_content %}
-  <h1>Welcome to your mask inventory system</h1>
+	<div class = "bg-white container text-center">
+		<img width = "300px" src="{% static 'img/mask.gif' %}" />
+  <h1 class= "text-center">Welcome to your mask inventory system</h1>
+  <h2> Click Login or Sign Up above to begin </h2>
+  
+	</div>
+  
   {{ id }}
 {% endblock %}
