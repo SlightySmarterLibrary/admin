@@ -1,6 +1,10 @@
+{% load static %}
+
 <nav class="header">
   <div class="header__title">
-    <a href="{% url 'index' %}">Mask Inventory</a>
+    <a href="{% url 'index' %}">
+      <img src="{% static 'img/Group.png' %}" alt="Face with a mask" width="48px" height="56px"/>
+    </a>
   </div>
 
   <ul class="header__items">
