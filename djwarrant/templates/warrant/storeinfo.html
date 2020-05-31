@@ -4,19 +4,62 @@
 {% block title %}My Store{% endblock title %}
 
 {% block main_content %}
-<h1> {{ store_name }} </h1>
-<button class="update-inventory btn btn-primary" type="button" name="button">Update Inventory</button>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1> {{ store_name }} </h1>
+    <button class="update-inventory btn btn-primary" style="height: 32px;" type="button" name="button">Update Inventory</button>
+  </div>
 
-    <table class="table">
-        <tr>
-           <td> Adult </td> <td> {{ adult }} </td>
-            <td> Children </td> <td> {{ children }} </td>
-           <td> Total </td> <td> {{ adult|add:children }} </td>
+<div class="store-overview">
+  <div class="store-overview__wrapper">
+    <div class="store-overview__wrapper--data">
+      <div style="flex-grow: 1">
+        <img src="{% static 'img/child.png' %} " height="40px" width="20px" />
+      </div>
 
-        </tr>
-    </table>
+      <div style="flex-grow: 1; text-align: center;">
+        <span class="store-overview__wrapper--value">{{ adult }}</span>
+      </div>
+    </div>
 
-    {% include 'orders/index.html' %}
+    <div class="store-overview__wrapper--title-wrapper">
+      <h2 class="store-overview__wrapper--title">Children Masks</h2>
+    </div>
+  </div>
+
+  <div class="store-overview__wrapper">
+    <div class="store-overview__wrapper--data">
+      <div style="flex-grow: 1">
+        <img src="{% static 'img/adult.png' %} " height="64px" width="24px" />
+      </div>
+
+      <div style="flex-grow: 1; text-align: center;">
+        <span class="store-overview__wrapper--value">{{ adult }}</span>
+      </div>
+    </div>
+
+    <div class="store-overview__wrapper--title-wrapper">
+      <h2 class="store-overview__wrapper--title">Adult Masks</h2>
+    </div>
+  </div>
+
+  <div class="store-overview__wrapper">
+    <div class="store-overview__wrapper--data">
+      <div style="flex-grow: 1">
+        <img src="{% static 'img/total.png' %} " height="56px" width="48px" />
+      </div>
+
+      <div style="flex-grow: 1; text-align: center;">
+        <span class="store-overview__wrapper--value">{{ adult|add:children }}</span>
+      </div>
+    </div>
+
+    <div class="store-overview__wrapper--title-wrapper">
+      <h2 class="store-overview__wrapper--title">Total Masks</h2>
+    </div>
+  </div>
+</div>
+
+{% include 'orders/index.html' %}
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
   <div class="modal-dialog" role="document">
