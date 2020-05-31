@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainMenu = document.getElementById('mainHeader');
   const mainMenuLinks = document.getElementById('main-header-links');
 
-  console.log(mainMenu);
-  console.log(mainMenuLinks);
-
   const toggle = function tog() {
     if (mainMenu) {
       if (mainMenu.classList.contains('animate-nav')) {

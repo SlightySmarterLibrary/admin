@@ -1,7 +1,9 @@
 {% extends 'warrant/base.html' %}
 {% load static %}
-{% block main_content %}
 
+{% block title %}My Store{% endblock title %}
+
+{% block main_content %}
 <h1> {{ store_name }} </h1>
 <button class="update-inventory btn btn-primary" type="button" name="button">Update Inventory</button>
 
@@ -37,8 +39,8 @@
 
 });
 </script>
+<script src="{% static 'js/dropdown.js' %}"></script>
 
 {% endblock extrascripts %}
-
 
 
