@@ -10,10 +10,6 @@
     </li>
 
     <li class="header__item">
-      <a href="{% url 'dw:storeinfo' %}">My store</a>
-    </li>
-
-    <li class="header__item">
       <a href="{% url 'dw:subscriptions' %}">My Subscriptions</a>
     </li>
 
@@ -43,10 +39,6 @@
   {% if request.user.is_authenticated %}
     <li class="header__item">
       <a href="{% url 'dw:profile' %}" class="collapsed-header-link">My Profile</a>
-    </li>
-
-    <li class="header__item">
-      <a href="{% url 'dw:update-profile' %}" class="collapsed-header-link">Update your Profile</a>
     </li>
 
     <li>
