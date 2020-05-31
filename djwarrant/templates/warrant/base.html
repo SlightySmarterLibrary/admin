@@ -1,6 +1,8 @@
 {% load static %}
 
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 
 <head>
@@ -50,6 +52,10 @@
         </li>
 
         <li class="header__item">
+          <a href="{% url 'dw:storeinfo' %}">Store</a>
+        </li>
+
+        <li class="header__item">
           <a href="{% url 'dw:logout' %}">Logout</a>
         </li>
       {% else %}
@@ -81,6 +87,10 @@
       </li>
 
       <li>
+        <a href="{% url 'dw:storeinfo' %}" class="collapsed-header-link">Store</a>
+      </li>
+
+      <li>
         <a href="{% url 'dw:logout' %}" class="collapsed-header-link">Logout</a>
       </li>
     {% else %}
@@ -107,12 +117,21 @@
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
 
-  {% block js %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-  </script>
-  {% endblock %}
-</body>
+    {% block js %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
 
+
+    {% endblock %}
+
+    {% block scripts %}
+
+      <!-- You can alternatively load the minified version -->
+      <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    {% endblock scripts %}
+
+    {% block extrascripts %}{% endblock extrascripts %}
+
+  </body>
 </html>

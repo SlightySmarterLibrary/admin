@@ -1,9 +1,12 @@
+from django.urls import reverse_lazy
+from djwarrant.forms import StoreForm
+from bootstrap_modal_forms.generic import BSModalCreateView
+from bootstrap_modal_forms.forms import BSModalForm
+from dynamodb_json import json_util as json
+from django.conf import settings
 from django.shortcuts import render
 import boto3
 from boto3.dynamodb.conditions import Key
-from django.conf import settings
-from dynamodb_json import json_util as json
-
 # call dynamo from here
 
 
@@ -26,7 +29,6 @@ class ViewOrders():
 
     def process(self, store_id=None, received=False):
         dynamoDB = boto3.client('dynamodb', region_name=settings.AWS_REGION)
-
         response = dynamoDB.query(
             TableName='orders',
             IndexName='store_id-index',
@@ -36,3 +38,10 @@ class ViewOrders():
             })
 
         return json.loads(response['Items'])
+
+
+class InventoryView(BSModalCreateView):
+    template_name = 'warrant/update-inventory.html'
+    form_class = StoreForm
+    success_message = 'Success: Store updated.'
+    success_url = reverse_lazy('index')

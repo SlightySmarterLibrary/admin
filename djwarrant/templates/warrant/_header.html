@@ -14,6 +14,10 @@
       </li>
 
       <li class="header__item">
+          <a href="{% url 'dw:storeinfo' %}">Store</a>
+        </li>
+
+      <li class="header__item">
         <a href="{% url 'dw:logout' %}">Logout</a>
       </li>
     {% else %}
@@ -38,6 +42,10 @@
 
     <li>
       <a href="{% url 'dw:subscriptions' %}" class="collapsed-header-link">My Subscriptions</a>
+    </li>
+
+    <li>
+      <a href="{% url 'dw:storeinfo' %}" class="collapsed-header-link">Store</a>
     </li>
 
     <li>
