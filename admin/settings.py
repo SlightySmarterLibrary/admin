@@ -152,7 +152,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 ***REMOVED*** = '***REMOVED***'
 ***REMOVED*** = '***REMOVED***'
 AWS_REGION = 'us-east-1'
-COGNITO_NAME = 'maskidentity'
+COGNITO_NAME = 'admin'
 
 # ================================================================
 # This section automatically loads user cognito information for user pool
