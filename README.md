@@ -1,4 +1,4 @@
-# WebApp
+# Admin
 Web app for the Slighty Smarter Library
 
 ### Note:
