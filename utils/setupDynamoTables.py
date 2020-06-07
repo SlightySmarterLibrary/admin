@@ -59,11 +59,11 @@ create_table(name="books", attribs=[
              ['id', 'S'], ['name', 'S']], keySchema=[['id', 'HASH'], ['name', 'RANGE']])
 create_table(name="users", attribs=[
              ['id', 'S'], ['name', 'S']], keySchema=[['id', 'HASH'], ['name', 'RANGE']])
-create_table(name="reservation", attribs=[
+create_table(name="reservations", attribs=[
              ['id', 'S'], ['user_id', 'S']], keySchema=[['id', 'HASH'], ['user_id', 'RANGE']])
-create_table(name="transaction", attribs=[
+create_table(name="transactions", attribs=[
              ['id', 'S']], keySchema=[['id', 'HASH']])
-create_table(name="checkout", attribs=[
+create_table(name="checkouts", attribs=[
              ['id', 'S']], keySchema=[['id', 'HASH']])
-create_table(name="waiting_list", attribs=[
+create_table(name="waiting_lists", attribs=[
              ['id', 'S'], ['book_id', 'S']], keySchema=[['id', 'HASH'], ['book_id', 'RANGE']])

@@ -15,7 +15,6 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 
 
-
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table('stores')
 # call dynamo from here
@@ -24,7 +23,7 @@ table = dynamodb.Table('stores')
 def storeinfo(request):
     store_id = request.user.email
     store_name = request.user.username
-    
+
     resp = table.query(KeyConditionExpression=Key('id').eq(store_id))
     adult = resp['Items'][0]['adult']
     children = resp['Items'][0]['children']
@@ -71,6 +70,7 @@ def filter_results(data, status='all'):
     elif status == 'completed':
         return list(filter(lambda x: x['received'] == True, data))
 
+
 class InventoryView(BSModalCreateView):
     template_name = 'warrant/update-inventory.html'
     form_class = StoreForm
@@ -87,17 +87,17 @@ class InventoryView(BSModalCreateView):
 
             try:
                 update = table.update_item(
-                    Key = { "id": store_id },
+                    Key={"id": store_id},
                     UpdateExpression="set adult=:a, children=:c",
                     ExpressionAttributeValues={
-                    ':a': new_adult,
-                    ':c': new_children
-                },
-                ReturnValues="UPDATED_NEW"
+                        ':a': new_adult,
+                        ':c': new_children
+                    },
+                    ReturnValues="UPDATED_NEW"
                 )
             except Exception as e:
                 raise(e)
-            
+
             print("Dynamo updated")
 
             sqs = boto3.client('sqs', region_name='us-east-1')
@@ -106,27 +106,21 @@ class InventoryView(BSModalCreateView):
             name = resp['Items'][0]['name']
 
             # arn
-            x = '''{{"function":"sendEmail", "store": "{0}", "adult": {1}, "children": {2}, "topic": "{3}"}}'''.format(name, new_adult, new_children, arn)
-            sqs.send_message(QueueUrl=qname, MessageBody=x)  
-            print(x)  
+            x = '''{{"function":"sendEmail", "store": "{0}", "adult": {1}, "children": {2}, "topic": "{3}"}}'''.format(
+                name, new_adult, new_children, arn)
+            sqs.send_message(QueueUrl=qname, MessageBody=x)
+            print(x)
             print("sqs sent!")
 
         return reverse_lazy('dw:storeinfo')
 
     def get_initial(self):
-      store_id = self.request.user.email
-      resp = table.query(KeyConditionExpression=Key('id').eq(store_id))
-      adult = resp['Items'][0]['adult']
-      children = resp['Items'][0]['children']
-      return {
-        'adult_masks': adult,
-        'children_masks': children
-      }
-
-     
-
-
-
-
-
+        store_id = self.request.user.email
+        resp = table.query(KeyConditionExpression=Key('id').eq(store_id))
+        adult = resp['Items'][0]['adult']
+        children = resp['Items'][0]['children']
+        return {
+            'adult_masks': adult,
+            'children_masks': children
+        }
 

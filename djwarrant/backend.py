@@ -137,10 +137,10 @@ class CognitoBackend(AbstractCognitoBackend):
             cognito_user.add_base_attributes(**{'name': name,
                                                 'email': email})
             response = cognito_user.register(username, password)
+
+            return response
         except (Boto3Error, ClientError) as e:
             return self.handle_error_response(e)
-
-        return response
 
     def validate_user(self, confirmation_code, username):
         '''Validate user account with confirmation code sent by AWS

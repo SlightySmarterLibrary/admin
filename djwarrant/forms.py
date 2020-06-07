@@ -48,14 +48,10 @@ class SignUpForm(forms.Form):
     username = forms.CharField(max_length=100, required=True)
     name = forms.CharField(max_length=200, required=True)
     email = forms.EmailField(required=True)
+    library_name = forms.CharField(max_length=200, required=True)
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
     verify_password = forms.CharField(
         widget=forms.PasswordInput(), required=True)
-
-    # Inventory Specific Input
-    address = forms.CharField(max_length=250)
-    adult_masks = forms.IntegerField(validators=[MinValueValidator(0)])
-    children_masks = forms.IntegerField(validators=[MinValueValidator(0)])
 
     def clean(self):
         user = super(SignUpForm, self).clean()

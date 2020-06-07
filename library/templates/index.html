@@ -12,10 +12,8 @@
 {% block main_content %}
 	<div class = "bg-white container text-center">
 		<img width = "300px" src="{% static 'img/mask.gif' %}" />
-  <h1 class= "text-center"> <strong> Welcome to your mask inventory system! </strong> </h1>
-  <h3> Click on a link in the menu above to begin </h3>
-  
+    <h1 class= "text-center"> <strong> Welcome to your Smart Library Management System! </strong> </h1>
+    <h3>Click to <a href="{% url "dw:login" %}">Login</a> or <a href="{% url "dw:signup" %}">Sign Up</a>
 	</div>
-  
   {{ id }}
 {% endblock %}

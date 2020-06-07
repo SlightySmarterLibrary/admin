@@ -20,6 +20,7 @@ from djwarrant.backend import CognitoBackend
 import boto3
 import uuid
 import json
+from library.utils.dynamo_helpers import create_user
 
 
 class TokenMixin(AccessMixin):
@@ -78,112 +79,16 @@ class SignUpView(FormView):
     template_name = 'warrant/signup.html'
     form_class = SignUpForm
 
-    def create_store(store_id, name, address, adults, children):
-        dynamodb = boto3.client('dynamodb', region_name='us-east-1')
-        sns = boto3.client('sns', region_name="us-east-1")
-        sqs = boto3.client('sqs', region_name='us-east-1')
-        qname = "https://sqs.us-east-1.amazonaws.com/583068504140/homework2"
-
-        topicname = store_id + name
-        topicname = ''.join(e for e in topicname if e.isalnum())
-        topicname = topicname.replace(" ", "")
-
-        # create arn
-        topic = sns.create_topic(Name=topicname)
-        arn = topic['TopicArn']
-
-        sns_topic_policy = {
-
-            "Version": "2008-10-17",
-            "Id": "__default_policy_ID",
-            "Statement": [
-                  {
-                      "Sid": "__default_statement_ID",
-                      "Effect": "Allow",
-                      "Principal": {
-                          "AWS": "*"
-                      },
-                      "Action": [
-                          "SNS:GetTopicAttributes",
-                          "SNS:SetTopicAttributes",
-                          "SNS:AddPermission",
-                          "SNS:RemovePermission",
-                          "SNS:DeleteTopic",
-                          "SNS:Subscribe",
-                          "SNS:ListSubscriptionsByTopic",
-                          "SNS:Publish",
-                          "SNS:Receive"
-                      ],
-                      "Resource": arn
-                  }
-            ]
-        }
-
-        sns.set_topic_attributes(
-            TopicArn=arn,
-            AttributeName='Policy',
-            AttributeValue=json.dumps(sns_topic_policy)
-        )
-
-        # create table
-        try:
-            dynamodb.create_table(
-                AttributeDefinitions=[
-                    {
-                        'AttributeName': 'id',
-                        'AttributeType': 'S',
-                    },
-                ],
-                KeySchema=[
-                    {
-                        'AttributeName': 'id',
-                        'KeyType': 'HASH',
-                    },
-                ],
-                ProvisionedThroughput={
-                    'ReadCapacityUnits': 5,
-                    'WriteCapacityUnits': 5,
-                },
-                TableName='stores',
-            )
-            dynamodb.get_waiter('table_exists').wait(TableName='HW2')
-        except dynamodb.exceptions.ResourceInUseException:
-            pass
-        except Exception as e:
-            print("Error creating table.")
-            print(e)
-
-        # add store
-        dynamodb.put_item(
-            TableName='stores',
-            Item={
-                "id": {"S": f"{store_id}"},
-                "name": {"S": f"{name}"},
-                "adult": {"N": f"{adults}"},
-                "children": {"N": f"{children}"},
-                "address": {"S": f"{address}"},
-                "sns_arn": {"S": f"{arn}"}
-            })
-
-        # subscribe to sqs
-        x = '''{{"function":"subscribe", "email": "{0}", "topic": "{1}"}}'''.format(
-            store_id, arn)
-        sqs.send_message(QueueUrl=qname, MessageBody=x)
-
-        print("sqs sent!")
-
-
     def form_valid(self, form):
         cognito = CognitoBackend()
 
         try:
+            # Register user to cognito
             resp = cognito.register(name=form.user['name'], password=form.user['password'],
                                     email=form.user['email'], username=form.user['username'])
-            # create store
-            # store_id = str(uuid.uuid4()) #Unique identifier for store
-            SignUpView.create_store(form.user['email'], form.user['name'],
-                                    form.user['address'], form.user['adult_masks'], form.user['children_masks'])
-
+            # Create user in DynamoDB
+            create_user(id=resp['UserSub'], username=form.user['username'], name=form.user['name'],
+                        email=form.user['email'], role="admin", library=form.user['library_name'])
         except Exception as e:
             if "User already exists" in str(e):
                 form.errors['username'] = form.error_class(
@@ -220,9 +125,7 @@ class AccountVerificationView(FormView):
 
         try:
             resp = cognito.validate_user(**form.user)
-            print(resp)
         except Exception as e:
-            print(e)
             pass
 
         return super().form_valid(form)
