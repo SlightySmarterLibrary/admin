@@ -14,6 +14,7 @@ from .utils import cognito_to_dict
 
 class CognitoUser(Cognito):
     user_class = get_user_model()
+
     # Mapping of Cognito User attribute name to Django User attribute name
     COGNITO_ATTR_MAPPING = getattr(settings, 'COGNITO_ATTR_MAPPING',
                                    {
@@ -22,6 +23,7 @@ class CognitoUser(Cognito):
                                        'given_name': 'first_name',
                                        'family_name': 'last_name',
                                        'address': 'address',
+                                       'sub': 'id'
                                    }
                                    )
 
@@ -31,6 +33,7 @@ class CognitoUser(Cognito):
         django_fields = [
             f.name for f in CognitoUser.user_class._meta.get_fields()]
         extra_attrs = {}
+
         for k, v in list(user_attrs.items()):
             if k not in django_fields:
                 extra_attrs.update({k: user_attrs.pop(k, None)})

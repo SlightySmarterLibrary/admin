@@ -86,6 +86,7 @@ class SignUpView(FormView):
             # Register user to cognito
             resp = cognito.register(name=form.user['name'], password=form.user['password'],
                                     email=form.user['email'], username=form.user['username'])
+
             # Create user in DynamoDB
             create_user(id=resp['UserSub'], username=form.user['username'], name=form.user['name'],
                         email=form.user['email'], role="admin", library=form.user['library_name'])

@@ -1,0 +1,29 @@
+{% extends 'warrant/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Create Book{% endblock title %}
+
+{% block main_content %}
+  <form method="post" class="user-session__form">
+    <h1 class="user-session__heading user-session__form--title">Create Book</h1>
+
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="user-session__input-group">
+        {% comment %} {{ field.label_tag }}<br> {% endcomment %}
+        <label class="user-session__input-group--label" for="{{ field.id_for_label }}">{{ field.name }}</label>
+
+        {{ field|add_class:'user-session__input-group--input' }}
+
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+
+        {% for error in field.errors %}
+          <div class="user-session__input-group--error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button class="user-session__button" type="submit">Create Book</button>
+  </form>
+{% endblock %}

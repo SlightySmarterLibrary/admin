@@ -46,7 +46,8 @@ COGNITO_ATTR_MAPPING = env(
         'email': 'email',
         'name': 'name',
         'custom:api_key': 'api_key',
-        'custom:api_key_id': 'api_key_id'
+        'custom:api_key_id': 'api_key_id',
+        'sub': 'id',
     },
     var_type='dict')
 
@@ -67,6 +68,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'dynamodb-json',
 ]
+
+AUTH_USER_MODEL = 'djwarrant.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
