@@ -13,7 +13,7 @@ from library.utils.dynamo_helpers import get_books
 def index(request):
     books = get_books(str(request.user.id))
 
-    return render(request, 'index.html')
+    return render(request, 'library/books/index.html', {'books': books})
 
 
 class CreateBook(FormView):

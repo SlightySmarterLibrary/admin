@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "warrant/base.html" %}
 {% load static %}
 
 {% block extra_css %}
@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block main_content %}
-	<div class = "bg-white container text-center">
-		<img width = "300px" src="{% static 'img/mask.gif' %}" />
-    <h1 class= "text-center"> <strong> Welcome to your Smart Library Management System! </strong> </h1>
+	<div class="bg-white container text-center">
+		<img width="420px" src="{% static 'img/books.gif' %}" />
+    <h1 class="text-center" style="margin-top: 1em"> <strong> Welcome to your Smart Library Management System! </strong> </h1>
     <h3>Click to <a href="{% url "dw:login" %}">Login</a> or <a href="{% url "dw:signup" %}">Sign Up</a>
 	</div>
   {{ id }}

@@ -3,7 +3,7 @@
 <nav class="header">
   <div class="header__title">
     <a href="{% url 'index' %}">
-      <img src="{% static 'img/Group.png' %}" alt="Face with a mask" width="48px" height="56px"/>
+      <img src="{% static 'img/Smart Library (2).png' %}" alt="Smart Library logo with various 2d books" width="72px" height="72px"/>
     </a>
   </div>
 
@@ -18,7 +18,7 @@
     </li> {% endcomment %}
 
     <li class="header__item">
-      <a href="{% url 'dw:storeinfo' %}">Store</a>
+      <a href="{% url 'book_index' %}">Books</a>
     </li>
 
     <li class="header__item">
@@ -50,7 +50,7 @@
     </li> {% endcomment %}
 
     <li>
-      <a href="{% url 'dw:storeinfo' %}" class="collapsed-header-link">Store</a>
+      <a href="{% url 'book_index' %}" class="collapsed-header-link">Books</a>
     </li>
 
     <li>

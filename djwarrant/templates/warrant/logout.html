@@ -1,14 +1,16 @@
 {% extends 'warrant/base.html' %}
 {% load static %}
+{% block title %}
+  Logged Out
+{% endblock %}
+
+{% block extra_css %}
+	<link href="{% static 'css/home.css' %}" rel="stylesheet"/>
+{% endblock extra_css %}
 
 {% block main_content %}
-
-	<div class = "container text-center">
-		<img width = "400px" src="{% static 'img/logout.gif' %}" />
-  <h1 class= "text-center"> <strong> You have been logged out </strong> </h1>
-  <br/> 
- 
+	<div class="bg-white container text-center">
+		<img width="420px" src="{% static 'img/books.gif' %}" />
+		<h1 class="text-center" style="margin-top: 1em"> <strong> You have been logged out! </strong> </h1>
 	</div>
-
-
 {% endblock %}

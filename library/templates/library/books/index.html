@@ -1,0 +1,55 @@
+{% extends 'warrant/base.html' %}
+{% load static %}
+
+{% block title %}My Books{% endblock title %}
+
+{% block main_content %}
+  <h1 class="heading">Your Books</h1>
+
+  <span>An overview of all your books and their availability status.</span>
+
+  {% if books %}
+    <table class="table__wrapper box-shadow">
+      <thead>
+        <tr class="table__row--header">
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Year</th>
+          <th>ISBN</th>
+          <th>Reserved</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for book in books %}
+          <tr class="table__row">
+            <td>{{ book.name }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>
+              {% if book.reserved %}
+                Reserved
+              {% else %}
+                Available
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  {% else %}
+    <h3 style="font-weight: 400;">
+      You currently have no books in your store.
+    </h3>
+  {% endif %}
+{% endblock %}
