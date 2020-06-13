@@ -56,7 +56,7 @@ def create_table(name, attribs, keySchema):
 
 
 create_table(name="books", attribs=[
-             ['id', 'S'], ['name', 'S']], keySchema=[['id', 'HASH'], ['name', 'RANGE']])
+             ['id', 'S'], ['user_id', 'S']], keySchema=[['id', 'HASH'], ['user_id', 'RANGE']])
 create_table(name="users", attribs=[
              ['id', 'S'], ['name', 'S']], keySchema=[['id', 'HASH'], ['name', 'RANGE']])
 create_table(name="reservations", attribs=[

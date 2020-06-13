@@ -7,7 +7,8 @@ from django.conf import settings
 import boto3
 from library.forms import CreateBookForm
 from django.shortcuts import resolve_url
-from library.utils.dynamo_helpers import get_books
+from library.utils.dynamo_helpers import get_books, update_book, get_book_by_id_and_user
+from django.views.generic.edit import UpdateView
 
 
 def index(request):
@@ -36,6 +37,49 @@ class CreateBook(FormView):
             print(e)
             form.errors['name'] = form.error_class(
                 [f"We couldn't save this book. {e}"]
+            )
+
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+
+
+class EditBook(FormView):
+    template_name = 'library/books/update.html'
+    form_class = CreateBookForm
+
+    def get_success_url(self):
+        return resolve_url('/')
+
+    def get_initial(self):
+        book_id = str(self.kwargs['id'])
+        user_id = str(self.request.user.id)
+
+        book = get_book_by_id_and_user(id=book_id, user_id=user_id)
+
+        return {
+            'name': book['name'],
+            'year': book['year'],
+            'author': book['author'],
+            'genre': book['genre'],
+            'isbn': book['isbn']
+        }
+
+    def form_valid(self, form):
+        try:
+            updated_book = update_book(
+                self.kwargs['id'],
+                form.book['name'],
+                form.book['year'],
+                form.book['author'],
+                form.book['genre'],
+                form.book['isbn'],
+                user_id=str(self.request.user.id)
+            )
+        except Exception as e:
+            print(e)
+            form.errors['name'] = form.error_class(
+                [f"Failed to update book. Please try again in a few minutes."]
             )
 
             return self.form_invalid(form)

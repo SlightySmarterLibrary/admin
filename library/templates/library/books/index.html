@@ -18,6 +18,7 @@
           <th>Year</th>
           <th>ISBN</th>
           <th>Reserved</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -35,6 +36,9 @@
               {% else %}
                 Available
               {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'edit_book' book.id %}">Edit</a>
             </td>
           </tr>
         {% endfor %}

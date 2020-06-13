@@ -11,6 +11,7 @@ REGION_NAME = 'us-east-1'
 
 # Create DynamoClient
 dynamo = b3.client('dynamodb', region_name=REGION_NAME)
+dynamodb = b3.resource('dynamodb', region_name="us-east-1")
 s3 = b3.client('s3', region_name=REGION_NAME)
 
 
@@ -62,12 +63,54 @@ def create_book(name, year, author, genre, isbn, user_id):
     return new_book
 
 
+def update_book(id, name, year, author, genre, isbn, user_id):
+    """Updates a book instance in dynamo and returns the updated book"""
+    keys = json.loads(json_util.dumps({
+        'id': id,
+        'user_id': user_id,
+    }))
+
+    keys = {
+        'id': {
+            'S': str(id)
+        },
+        'user_id': {
+            'S': str(user_id)
+        },
+    }
+
+    attribute_values = json.loads(json_util.dumps({
+        ':name': name,
+        ':year': year,
+        ':author': author,
+        ':genre': genre,
+        ':isbn': isbn,
+    }))
+
+    response = dynamo.update_item(
+        # IndexName="id-user_id-index",
+        TableName="books",
+        Key=keys,
+        ExpressionAttributeNames={
+            '#name': 'name',
+            '#year': 'year',
+            '#author': 'author',
+            '#genre': 'genre',
+            '#isbn': 'isbn',
+        },
+        ExpressionAttributeValues=attribute_values,
+        ReturnValues='ALL_NEW',
+        UpdateExpression='SET #name = :name, #year = :year, #author = :author, #genre = :genre, #isbn = :isbn',
+    )
+
+    return response
+
+
 def get_books(user_id=None):
     queryCondition = "user_id = :user_id"
     queryAttributes = {
         ':user_id': user_id,
     }
-    dynamodb = b3.resource('dynamodb', region_name="us-east-1")
     books = dynamodb.Table('books')
 
     response = books.query(
@@ -76,3 +119,14 @@ def get_books(user_id=None):
     )
 
     return json_util.loads(response['Items'])
+
+
+def get_book_by_id_and_user(id, user_id):
+    books = dynamodb.Table('books')
+
+    response = books.query(
+        # IndexName="id-user_id-index",
+        KeyConditionExpression=Key('id').eq(id) & Key('user_id').eq(user_id)
+    )
+
+    return json_util.loads(response['Items'][0])
