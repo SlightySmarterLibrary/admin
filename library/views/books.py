@@ -7,9 +7,12 @@ from django.conf import settings
 import boto3
 from library.forms import CreateBookForm
 from django.shortcuts import resolve_url
+from library.utils.dynamo_helpers import get_books
 
 
 def index(request):
+    books = get_books(str(request.user.id))
+
     return render(request, 'index.html')
 
 
@@ -26,6 +29,8 @@ class CreateBook(FormView):
                 form.book['name'],
                 form.book['year'],
                 form.book['author'],
+                form.book['genre'],
+                form.book['isbn'],
                 user_id=self.request.user.id)
         except Exception as e:
             print(e)

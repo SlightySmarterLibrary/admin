@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import uuid
 import qrcode
 from .s3_helpers import upload_book_qr_code
+from boto3.dynamodb.conditions import Key, Attr
 
 REGION_NAME = 'us-east-1'
 
@@ -32,7 +33,7 @@ def create_user(id, username, name, email, role, library):
     return new_user
 
 
-def create_book(name, year, author, user_id):
+def create_book(name, year, author, genre, isbn, user_id):
     """Creates a book instance in dynamo and returns the created book"""
 
     book_id = str(uuid.uuid1())
@@ -49,6 +50,8 @@ def create_book(name, year, author, user_id):
         'created_at': str(created_date),
         'updated_at': str(created_date),
         'qr_code': qr_code,
+        'genre': genre,
+        'isbn': isbn
     }
 
     dynamo.put_item(
@@ -57,3 +60,19 @@ def create_book(name, year, author, user_id):
     )
 
     return new_book
+
+
+def get_books(user_id=None):
+    queryCondition = "user_id = :user_id"
+    queryAttributes = {
+        ':user_id': user_id,
+    }
+    dynamodb = b3.resource('dynamodb', region_name="us-east-1")
+    books = dynamodb.Table('books')
+
+    response = books.query(
+        IndexName="user_id-index",
+        KeyConditionExpression=Key('user_id').eq(user_id)
+    )
+
+    return json_util.loads(response['Items'])
