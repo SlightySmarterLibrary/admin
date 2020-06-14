@@ -4,7 +4,17 @@
 {% block title %}My Books{% endblock title %}
 
 {% block main_content %}
-  <h1 class="heading">Your Books</h1>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 class="heading">Your Books</h1>
+
+    <a
+      href="{% url "create_book" %}"
+      class="user-session__button update-inventory btn btn-primary user-session__button--dropdown-launcher"
+      style="height: 32px; color: white;"
+      type="button"
+      name="button"
+    >Create Book</a>
+  </div>
 
   <span>An overview of all your books and their availability status.</span>
 

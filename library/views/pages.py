@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 
 
 def home(request):
-    if request.user:
+    if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('book_index'))
 
     return render(request, 'index.html')

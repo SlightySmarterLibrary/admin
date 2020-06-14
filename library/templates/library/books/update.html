@@ -10,7 +10,6 @@
     {% csrf_token %}
     {% for field in form %}
       <div class="user-session__input-group">
-        {% comment %} {{ field.label_tag }}<br> {% endcomment %}
         <label class="user-session__input-group--label" for="{{ field.id_for_label }}">{{ field.name }}</label>
 
         {{ field|add_class:'user-session__input-group--input' }}

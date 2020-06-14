@@ -293,22 +293,6 @@ body {
   background: white !important;
 }
 
-thead th:nth-child(1) {
-  width: 30%;
-}
-
-thead th:nth-child(2) {
-  width: 20%;
-}
-
-thead th:nth-child(3) {
-  width: 15%;
-}
-
-thead th:nth-child(4) {
-  width: 35%;
-}
-
 th,
 td {
   padding: 1em;
@@ -327,6 +311,10 @@ tbody tr:nth-child(odd) {
   min-width: 140px;
   font-size: 1em;
   text-transform: capitalize;
+}
+
+.user-session__button--dropdown-launcher:hover {
+  color: #172b4d !important;
 }
 
 .dropdown-parent {
