@@ -153,8 +153,8 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-***REMOVED*** = '***REMOVED***'
-***REMOVED*** = '***REMOVED***'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_REGION = 'us-east-1'
 COGNITO_NAME = 'admin'
 

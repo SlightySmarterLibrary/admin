@@ -75,8 +75,8 @@ class AbstractCognitoBackend(ModelBackend):
         cognito_user = CognitoUser(
             settings.COGNITO_USER_POOL_ID,
             settings.COGNITO_APP_ID,
-            access_key=getattr(settings, '***REMOVED***', None),
-            secret_key=getattr(settings, '***REMOVED***', None),
+            access_key=getattr(settings, 'AWS_ACCESS_KEY_ID', None),
+            secret_key=getattr(settings, 'AWS_SECRET_ACCESS_KEY', None),
             user_pool_region=getattr(settings, 'AWS_REGION', None),
             username=username)
         try:
@@ -131,8 +131,8 @@ class CognitoBackend(AbstractCognitoBackend):
         cognito_user = CognitoUser(
             settings.COGNITO_USER_POOL_ID,
             settings.COGNITO_APP_ID,
-            access_key=getattr(settings, '***REMOVED***', None),
-            secret_key=getattr(settings, '***REMOVED***', None),
+            access_key=getattr(settings, 'AWS_ACCESS_KEY_ID', None),
+            secret_key=getattr(settings, 'AWS_SECRET_ACCESS_KEY', None),
             user_pool_region=getattr(settings, 'AWS_REGION', None),
             username=username)
 
@@ -153,8 +153,8 @@ class CognitoBackend(AbstractCognitoBackend):
         cognito_user = CognitoUser(
             settings.COGNITO_USER_POOL_ID,
             settings.COGNITO_APP_ID,
-            access_key=getattr(settings, '***REMOVED***', None),
-            secret_key=getattr(settings, '***REMOVED***', None),
+            access_key=getattr(settings, 'AWS_ACCESS_KEY_ID', None),
+            secret_key=getattr(settings, 'AWS_SECRET_ACCESS_KEY', None),
             user_pool_region=getattr(settings, 'AWS_REGION', None),
             username=username)
         cognito_user.confirm_sign_up(confirmation_code,

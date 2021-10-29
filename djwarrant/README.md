@@ -60,7 +60,7 @@
  only existing local Django users are updated.
  Defaults to `True`.
  
- 5. Optional - Set `***REMOVED***` and `***REMOVED***`
+ 5. Optional - Set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
  to the AWS access keys you would like to use.
  Defaults to `None`, which will use the default credentials in your `~/.aws/credentials` file.
  
